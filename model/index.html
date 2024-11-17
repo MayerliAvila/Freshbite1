@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadatos para la página -->
+    <meta charset="UTF-8"> <!-- Especifica el tipo de codificación de caracteres para la página -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Habilita la vista adaptable en dispositivos móviles -->
+    <title>Freshbite</title> <!-- Título de la página que aparece en la pestaña del navegador -->
+
+    <!-- Carga de Tailwind CSS para estilos rápidos y personalizados -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Carga de FontAwesome para los íconos utilizados en la interfaz -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Carga de archivo CSS personalizado para estilos adicionales -->
+    <link rel="stylesheet" href="estilos.css">
+
+    <!-- Carga de Chart.js para crear gráficos interactivos en la aplicación -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+
+    <!-- Carga del archivo JavaScript personalizado, que se ejecutará una vez que el documento esté listo -->
+    <script src="app.js" defer></script>
+
+    <!-- Carga de un archivo JavaScript adicional desde una ruta específica -->
+    <script src="ruta/a/tu/archivo.js"></script>
+    <!-- Carga de Axios para realizar solicitudes HTTP -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-green-100 font-roboto">
+    <!-- Barra superior con la hora y el estado del teléfono -->
+    <div class="bg-green-100 p-1 flex justify-between items-center">
+        <span class="text-black text-sm">09:00</span> <!-- Muestra la hora actual en formato de texto -->
+        <div class="flex items-center space-x-2">
+            <!-- Iconos de señal y batería para indicar el estado del dispositivo -->
+            <i class="fas fa-signal text-black text-sm"></i>
+            <i class="fas fa-battery-full text-black text-sm"></i>
+        </div>
+    </div>
+
+    <!-- Barra de encabezado con el título de la aplicación y la imagen de perfil del usuario -->
+    <div class="bg-white p-1 flex justify-between items-center">
+        <div class="menu-icon" onclick="openAcercaModal()" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="acercaModal" aria-label="Abrir modal Acerca de">
+            <i class="fas fa-bars text-blue-500 text-sm"></i> <!-- Ícono de menú que abre un modal con información sobre la aplicación -->
+        </div>
+        <h1 class="text-xl font-bold text-center flex-1">FRESHBITE</h1> <!-- Título de la aplicación, centrado y en negrita -->
+        <div class="relative">
+            <!-- Contenedor para la imagen de perfil del usuario -->
+            <div>
+                <!-- Imagen de perfil principal que abre un editor al ser clickeada -->
+                <img alt="User profile picture" onclick="openEditarModal()" role="button" tabindex="0" aria-haspopup="dialog"
+                    aria-controls="editorModal" aria-label="Abrir editor" class="rounded-full" id="mainProfilePicture"
+                    height="30" src="https://storage.googleapis.com/a1aa/image/Lok6xjd8a8ZTGZTYtghXqrCDd6jOxP6SqcTPdobVWCuDFh5E.jpg" width="30"/>
+            </div>
+         </div>
+    </div>
+<!-- Contenido principal de la página -->
+<div class="content">
+    <!-- Título de la sección Despensa con un evento onclick para abrir un modal -->
+    <h1 class="text-center text-lg font-bold cursor-pointer" onclick="openDespensaModal()">DESPENSA</h1>
+    
+    <!-- Canvas para el gráfico de Chart.js (inicialmente oculto) -->
+    <canvas id="myChart" class="hidden"></canvas>
+
+    <!-- Sección de botones para diferentes funcionalidades (Recetas, Menú, Compras, Retirar) -->
+    <div class="grid grid-cols-2 gap-4 p-4">
+        <!-- Recetas Favoritas -->
+        <div class="section-box" onclick="openRecetasModal()" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="recetaModal" aria-label="Abrir receta">
+            <div class="section">
+                <img alt="Favorite recipes icon" class="mx-auto bg-white p-2 rounded" height="60" src="https://cdn3.iconfinder.com/data/icons/food-set-2-1/91/Food_C190-256.png" width="60"/>
+                <span class="text-center text-lg font-bold cursor-pointer">Recetas Favoritas</span>
+            </div>
+        </div>
+        
+        <!-- Menú del Día -->
+        <div class="section-box" onclick="openMenuModal()" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="menuModal" aria-label="Abrir menú del día">
+            <div class="section">
+                <img alt="Icono del menú del día" class="mx-auto bg-white p-2 rounded" height="60" src="https://cdn-icons-png.flaticon.com/512/9126/9126550.png" width="60"/>
+                <span class="text-center text-lg font-bold cursor-pointer">Menú Del Día</span>
+            </div>
+        </div>
+
+        <!-- Compras Sugeridas -->
+        <div class="section-box" onclick="openComprasModal()" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="comprasModal" aria-label="Abrir compras sugeridas">
+            <div class="section">
+                <img alt="Suggested purchases icon" class="mx-auto bg-white p-2 rounded" height="60" src="https://cdn-icons-png.flaticon.com/512/7757/7757762.png" width="60"/>
+                <span class="text-center text-lg font-bold cursor-pointer">Compras Sugeridas</span>
+            </div>
+        </div>
+
+        <!-- Retirar Productos -->
+        <div class="section-box" onclick="openRetirarModal()" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="retirarModal" aria-label="Abrir modal para retirar productos">
+            <div class="section">
+                <img alt="Remove products icon" class="mx-auto bg-white p-2 rounded" height="60" src="https://cdn-icons-png.flaticon.com/512/8110/8110689.png" width="60"/>
+                <span class="text-center text-lg font-bold cursor-pointer">Retirar Productos</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer con iconos para navegación -->
+<div class="footer grid grid-cols-4 bg-white p-2">
+    <!-- Icono de recetas -->
+    <div class="footer-item text-center" onclick="openBuscarRecetasModal()">
+        <i class="fas fa-utensils text-2xl text-black"></i>
+        <span class="block text-sm">RECETAS</span>
+    </div>
+
+    <!-- Icono de agregar productos -->
+    <div class="footer-item text-center" onclick="openAgregarModal()">
+        <i class="fas fa-cart-plus text-2xl text-black"></i>
+        <span class="block text-sm">AGREGAR</span>
+    </div>
+
+    <!-- Icono para editar perfil o configuración -->
+    <div class="footer-item text-center" onclick="openEditModal()">
+        <i class="fas fa-user-cog text-2xl text-black"></i>
+        <span class="block text-sm">EDITAR</span>
+    </div>
+
+    <!-- Icono de notificaciones -->
+    <div class="footer-item text-center" onclick="openNotifiModal()">
+        <i class="fas fa-user-cog text-2xl text-black"></i>
+        <span class="block text-xs truncate">NOTIFICACIONES</span>
+    </div>
+</div>
+
+<!-- Modal para Recetas Favoritas -->
+<div id="recetasModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Recetas Favoritas</h2>
+        <!-- Lista de recetas favoritas -->
+        <ul id="recetasList">
+            <!-- Las recetas se agregarán dinámicamente aquí -->
+        </ul>
+        <!-- Lista desplegable para seleccionar una receta -->
+        <select id="recetaSelect" class="border rounded p-2 mt-4 w-full" onchange="toggleManualInput()">
+            <option value="" disabled selected>Selecciona una receta</option>
+            <option value="Ensalada de Frutas">Ensalada de Frutas</option>
+            <option value="Pasta Primavera">Pasta Primavera</option>
+            <option value="Tacos de Pollo">Tacos de Pollo</option>
+            <option value="Sopa de Verduras">Sopa de Verduras</option>
+            <option value="Pizza Margherita">Pizza Margherita</option>
+            <option value="Sushi">Sushi</option>
+            <option value="Guiso de Lentejas">Guiso de Lentejas</option>
+            <option value="Otra receta">Otra receta</option> <!-- Opción para agregar manualmente -->
+        </select>
+        
+        <!-- Campo de texto para agregar una receta manualmente -->
+        <input type="text" id="nuevaRecetaInput" placeholder="Ingresa tu receta" class="border rounded p-2 mt-2 w-full hidden" />
+        
+        <button class="mt-2 bg-blue-500 text-white py-2 px-4 rounded" onclick="agregarReceta()">Agregar Receta</button>
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeRecetasModal()">Cerrar</button>
+    </div>
+</div>
+<!-- Modal para Menú del Día -->
+<div id="menuModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <!-- Capa de fondo oscura que cubre toda la pantalla -->
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <!-- Contenido del modal, con un fondo blanco y bordes redondeados -->
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Menú del Día</h2>
+        <div class="container mx-auto p-4">
+            <!-- Etiqueta y selector para elegir un día -->
+            <label for="diaSeleccionado" class="block mb-2 font-bold">Selecciona un Día:</label>
+            <select id="diaSeleccionado" class="border border-gray-300 rounded p-2" onchange="mostrarMenu()">
+                <option value="">-- Elige un día --</option>
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+        </div>
+        <!-- Lista desordenada que se llenará dinámicamente con el menú del día -->
+        <ul id="menuList" class="mt-4">
+            <!-- Aquí se llenará el menú dinámicamente a través de JavaScript -->
+        </ul>
+        <!-- Botón para cerrar el modal -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeMenuModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal para Compras Sugeridas -->
+<div id="comprasModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <!-- Capa de fondo oscura que cubre toda la pantalla -->
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <!-- Contenido del modal, con un fondo blanco y bordes redondeados -->
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Compras Sugeridas</h2>
+        <div class="mb-4">
+            <!-- Etiqueta y selector para elegir una categoría de productos sugeridos -->
+            <label for="categoriaSeleccionada" class="block mb-2 font-bold">Selecciona una categoría:</label>
+            <select id="categoriaSeleccionada" class="border border-gray-300 rounded p-2" onchange="mostrarCompras()">
+                <option value="">-- Elige una categoría --</option>
+                <option value="Fruta">Fruta</option>
+                <option value="Verdura">Verdura</option>
+                <option value="Abarrotes">Abarrotes</option>
+            </select>
+        </div>
+        <!-- Tabla que mostrará los productos sugeridos para la compra, inicialmente oculta -->
+        <table id="comprasTable" class="min-w-full border-collapse border border-gray-200 hidden">
+            <thead>
+                <tr>
+                    <th class="border border-gray-200 p-2">Producto</th>
+                    <th class="border border-gray-200 p-2">Cantidad</th>
+                    <th class="border border-gray-200 p-2">Precio (COP)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se llenarán los productos dinámicamente a través de JavaScript -->
+            </tbody>
+        </table>
+        <!-- Botón para cerrar el modal -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeComprasModal()">Cerrar</button>
+    </div>
+</div>
+<!-- Modal de Edición de Perfil -->
+<div id="editModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <!-- Capa de fondo oscurecida para el modal -->
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50" onclick="closeEditModal()"></div>
+    <!-- Contenido del modal, donde se encuentra el formulario de edición -->
+    <div class="modal-content bg-white rounded-lg p-6 relative z-10 w-11/12 max-w-md max-h-[90vh] overflow-y-auto">
+        <h2 class="text-lg font-bold mb-4">Editar Perfil</h2>
+        <form id="editProfileForm" onsubmit="saveProfileChanges(event)">
+            <!-- Campos del formulario para editar datos del perfil -->
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input id="name" name="name" type="text" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input id="email" name="email" type="email" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <div class="form-group">
+                <label for="phone">Teléfono</label>
+                <input id="phone" name="phone" type="tel" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <div class="form-group">
+                <label for="age">Edad</label>
+                <input id="age" name="age" type="number" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <div class="form-group">
+                <label for="weight">Peso (kg)</label>
+                <input id="weight" name="weight" type="number" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <div class="form-group">
+                <label for="height">Altura (cm)</label>
+                <input id="height" name="height" type="number" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <div class="form-group">
+                <label for="allergies">Alergias</label>
+                <input id="allergies" name="allergies" type="text" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500"/>
+            </div>
+            <!-- Botón para guardar cambios en el perfil -->
+            <button class="bg-green-500 text-white py-2 px-4 rounded mt-4" type="submit">Guardar Cambios</button>
+            <!-- Mensaje de confirmación que se muestra tras guardar -->
+            <p id="editConfirmationMessage" class="hidden text-green-600 mt-2">¡Cambios guardados exitosamente!</p>
+        </form>
+        <!-- Botón para cerrar el modal de edición -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeEditModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal para editar foto de perfil -->
+<div id="editarModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+        <h2>Editar foto de perfil</h2>
+        <!-- Vista previa de la imagen de perfil -->
+        <img id="profilePreview" class="rounded-full" src="https://storage.googleapis.com/a1aa/image/Lok6xjd8a8ZTGZTYtghXqrCDd6jOxP6SqcTPdobVWCuDFh5E.jpg" alt="Vista previa de la imagen" width="100" height="100"/>
+        <!-- Etiqueta para seleccionar una nueva imagen -->
+        <label for="uploadInput" class="upload-button">Seleccionar nueva imagen</label>
+        <!-- Input para subir una nueva imagen -->
+        <input type="file" id="uploadInput" class="hidden" accept="image/*" onchange="previewImage(event)" />
+        
+        <!-- Botón para guardar la nueva imagen de perfil -->
+        <button class="save-button" onclick="guardarImagen()">Guardar</button>
+
+        <!-- Botón para cerrar el modal de edición de imagen -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeEditarModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal para Buscar Recetas por Ingredientes -->
+<div id="buscarRecetasModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <!-- Overlay oscuro que cubre toda la pantalla -->
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <!-- Contenido del modal que incluye el formulario para buscar recetas -->
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Buscar Recetas por Ingredientes</h2>
+        <!-- Área de chat donde se mostrarán los mensajes -->
+        <div id="chatContainer" class="border border-gray-300 rounded-lg p-4 h-64 overflow-y-auto mb-4">
+            <ul id="chatMessages" class="space-y-2"></ul>
+        </div>
+        <!-- Campo de texto para ingresar el ingrediente a buscar -->
+        <div class="flex">
+            <input type="text" id="ingredientInput" class="block w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-green-500" placeholder="Ingresa un ingrediente...">
+            <!-- Botón para enviar el ingrediente y buscar recetas -->
+            <button class="bg-blue-500 text-white py-2 px-4 rounded ml-2" onclick="enviarMensaje()">Enviar</button>
+        </div>
+        <!-- Botón para cerrar el modal -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeBuscarRecetasModal()">Cerrar</button>
+    </div>
+</div>
+
+
+
+<!-- Modal de notificaciones -->
+<div id="notificationModal" class="modal hidden">
+    <div class="modal-content">
+        <h2 class="text-lg font-bold mb-4">Notificaciones</h2>
+        <div id="notificationList">
+            <!-- Aquí se llenarán las notificaciones con JS -->
+        </div>
+        <!-- Botón para cerrar el modal de notificaciones -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeNotifiModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal "Acerca de" -->
+<div id="acercaModal" class="modal hidden">
+    <div class="modal-content">
+        <h2 class="text-lg font-bold mb-4">Acerca de la Aplicación</h2>
+        <!-- Información sobre la aplicación -->
+        <p><strong>Nombre de la Aplicación:</strong> Freshbite</p>
+        <p><strong>Descripción:</strong> Freshbite es una aplicación diseñada para ayudar a los usuarios a gestionar su consumo de alimentos, reducir el desperdicio y fomentar hábitos alimenticios saludables.</p>
+        <p><strong>Creadores:</strong> Daniel Lopez, Daniel Pinzon, Mayerli Quintero </p>
+        <p><strong>Año de Creación:</strong> 2024</p>
+        <!-- Botón para cerrar el modal "Acerca de" -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeAcercaModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal principal para agregar productos -->
+<div id="agregarModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <!-- Overlay oscuro que cubre toda la pantalla -->
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <!-- Contenido del modal que permite seleccionar el método de adición de productos -->
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Agregar Producto</h2>
+        <!-- Botones para elegir agregar productos por Código de Barra o Manualmente -->
+        <button class="bg-blue-500 text-white py-2 px-4 rounded mb-4" onclick="openBarcodeModal()">Agregar por Código de Barra</button>
+        <button class="bg-green-500 text-white py-2 px-4 rounded" onclick="openManualModal()">Agregar Manualmente</button>
+        <!-- Botón para cerrar el modal principal -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeAgregarModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal para agregar producto por Código de Barra -->
+<div id="barcodeModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <!-- Overlay oscuro que cubre toda la pantalla -->
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <!-- Contenido del modal para la adición de productos mediante código de barra -->
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Agregar Producto por Código de Barra</h2>
+        <!-- Campo para escanear o ingresar manualmente el código de barra del producto -->
+        <input type="text" id="barcode" placeholder="Escanea o ingresa el código de barra" class="block w-full border border-gray-300 rounded py-2 px-3 mb-4">
+        <!-- Botón para buscar el producto con el código de barra ingresado -->
+        <button class="bg-blue-500 text-white py-2 px-4 rounded mb-4" onclick="addBarcodeProduct()">Buscar Producto</button>
+        
+        <!-- Contenedor para mostrar la información del producto encontrado -->
+        <div id="productInfo" class="hidden mb-4">
+            <p><strong>Nombre:</strong> <span id="productName"></span></p>
+            <p><strong>Categoría:</strong> <span id="productCategory"></span></p>
+            <p><strong>Peso:</strong> <span id="productWeight"></span></p>
+            <p><strong>Fecha de expiración:</strong> <span id="productExpiryDate"></span></p>
+            <!-- Botón para confirmar la adición del producto -->
+            <button class="bg-green-500 text-white py-2 px-4 rounded mt-2" onclick="confirmAddProduct()">Guardar Producto</button>
+        </div>
+
+        <!-- Mensaje de confirmación que se muestra al agregar el producto -->
+        <p id="barcodeConfirmationMessage" class="hidden text-green-600 mt-2">¡Producto agregado exitosamente!</p>
+        
+        <!-- Mensaje de error si el producto no se encuentra -->
+        <p id="productNotFoundMessage" class="hidden text-red-600 mt-2">Producto no encontrado en la base de datos.</p>
+
+        <!-- Botón para cerrar el modal -->
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeBarcodeModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal para agregar producto manualmente -->
+<div id="manualModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Agregar Producto Manualmente</h2>
+        
+        <!-- Formulario para agregar producto manualmente -->
+        <form id="manualProductForm">
+            <label class="block mb-2">Nombre del Producto:</label>
+            <input type="text" id="manualName" class="block w-full border border-gray-300 rounded py-2 px-3 mb-4" required>
+            <label class="block mb-2">Categoría:</label>
+
+            <select id="manualCategory" class="block w-full border border-gray-300 rounded py-2 px-3 mb-4" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                <option value="Fruta">Fruta</option>
+                <option value="Verdura">Verdura</option>
+                <option value="Proteína">Proteína</option>
+                <option value="Abarrote">Abarrote</option>
+            </select>
+            
+            <label class="block mb-2">Peso:</label>
+            <input type="text" id="manualWeight" class="block w-full border border-gray-300 rounded py-2 px-3 mb-4" required>
+            
+            <label class="block mb-2">Fecha de Expiración:</label>
+            <input type="date" id="manualExpiryDate" class="block w-full border border-gray-300 rounded py-2 px-3 mb-4" required>
+
+            <input type="text" id="manualBarcode" class="block w-full border border-gray-300 rounded py-2 px-3 mb-4" readonly>
+
+            
+            
+            <button type="button" class="bg-blue-500 text-white py-2 px-4 rounded" onclick="addManualProduct()">Guardar Producto</button>
+        </form>
+
+        <p id="manualConfirmationMessage" class="hidden text-green-600 mt-2">¡Producto agregado exitosamente!</p>
+        <button class="mt-4 bg-red-500 text-white py-2 px-4 rounded" onclick="closeManualModal()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal para mostrar los productos en la despensa -->
+<div id="despensaModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-md max-h-[90vh] overflow-y-auto">
+        <h2 class="text-lg font-bold mb-4">Despensa</h2>
+        <div id="addedProductsList" class="mb-4">
+            <!-- Aquí se generarán los productos añadidos dinámicamente -->
+        </div>
+        <button class="bg-red-500 text-white py-2 px-4 rounded" onclick="closeDespensaModal()">Cerrar</button>
+    </div>
+</div>
+<!-- Modal para retirar producto -->
+<div id="retirarModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+    <div class="modal-content bg-white rounded-lg p-4 relative z-10 w-11/12 max-w-lg">
+        <h2 class="text-lg font-bold mb-4">Retirar Producto</h2>
+        
+        <!-- Lista de productos añadidos -->
+        <ul id="retirarProductList" class="list-disc pl-6 mb-4">
+            <!-- Los productos se agregarán aquí dinámicamente -->
+        </ul>
+
+        <!-- Mensaje de confirmación de producto eliminado (Dentro del Modal) -->
+        <p id="productRemovedMessage" class="hidden text-red-500 mt-2">Producto eliminado</p>
+
+        <!-- Botón de confirmación de eliminación de producto -->
+        <button id="retirarProductButton" class="bg-red-500 text-white py-2 px-4 rounded hidden" onclick="retirarProducto()">Retirar</button>
+        
+        <!-- Botón para cerrar el modal -->
+        <button class="mt-4 bg-gray-500 text-white py-2 px-4 rounded" onclick="closeRetirarModal()">Cerrar</button>
+    </div>
+</div>
+
+</body>
+</html>

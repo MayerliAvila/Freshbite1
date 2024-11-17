@@ -1,0 +1,251 @@
+/* Estilos globales del cuerpo */
+body {
+    font-family: 'Roboto', sans-serif; /* Define la fuente de texto general */
+    background-color: #e0f7e9; /* Establece un color de fondo suave */
+    margin: 0%; /* Elimina los márgenes predeterminados */
+    display: flex; /* Usa flexbox para organizar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    flex-direction: column; /* Organiza los elementos en una columna */
+    width: 375px; /* Establece un ancho fijo para simular el tamaño de un celular */
+    height: 667px; /* Establece una altura fija para simular un celular */
+    border: 16px solid #f1f1f1; /* Agrega un borde que simula el marco de un celular */
+    border-radius: 30px; /* Redondea los bordes del marco */
+    overflow: hidden; /* Evita el desbordamiento del contenido */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Aplica una sombra para dar efecto de profundidad */
+    position: absolute; /* Posiciona el "celular" en relación a la pantalla */
+    top: 50%; /* Centra verticalmente el contenedor */
+    left: 50%; /* Centra horizontalmente el contenedor */
+    transform: translate(-50%, -50%); /* Ajusta la posición para estar centrado */
+}
+
+/* Estilos para el encabezado */
+.header {
+    background-color: white; /* Establece el fondo blanco para el encabezado */
+    padding: 10px; /* Aplica espaciado interno */
+    border-radius: 10px; /* Redondea los bordes del encabezado */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega sombra sutil al encabezado */
+    margin-bottom: 10px; /* Espacio debajo del encabezado */
+}
+
+/* Estilos para los íconos */
+.icon {
+    width: 24px; /* Define el ancho de los íconos */
+    height: 24px; /* Define la altura de los íconos */
+}
+
+/* Estilos del gráfico */
+#myChart {
+    width: 100%; /* Ajusta el ancho del gráfico al contenedor */
+    height: 200px; /* Establece la altura del gráfico */
+}
+
+/* Estilos para la sección de contenido */
+.content {
+    flex: 1; /* Esta sección ocupa todo el espacio restante disponible */
+    padding: 10px; /* Aplica espaciado interno */
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+}
+
+/* Estilos para el pie de página */
+.footer {
+    background-color: white; /* Establece el fondo blanco para el pie de página */
+    padding: 10px; /* Aplica espaciado interno */
+    border-radius: 10px; /* Redondea los bordes del pie de página */
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Agrega sombra en la parte superior */
+    display: flex; /* Usa flexbox para organizar los ítems */
+    justify-content: space-around; /* Espaciado equitativo entre los ítems */
+    position: relative; /* Mantiene el pie de página en la parte inferior */
+}
+
+/* Estilos para los cuadros de las secciones */
+.section-box {
+    background-color: white; /* Establece el fondo blanco para los cuadros */
+    border-radius: 10px; /* Redondea los bordes de los cuadros */
+    padding: 10px; /* Aplica espaciado interno */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega sombra sutil a los cuadros */
+    margin: 5px; /* Aplica espaciado externo entre los cuadros */
+}
+
+/* Estilos generales para las secciones */
+.section {
+    text-align: center; /* Centra el texto dentro de la sección */
+    margin-bottom: 10px; /* Espaciado debajo de cada sección */
+}
+
+/* Diseño en grid para organizar contenido en 2 columnas */
+.grid {
+    display: grid; /* Usa diseño basado en grid */
+    grid-template-columns: repeat(2, 1fr); /* Define dos columnas de igual tamaño */
+    gap: 10px; /* Espacio entre las columnas */
+}
+
+/* Estilos para el texto dentro de los cuadros de las secciones */
+.section-box span {
+    font-size: 12px; /* Ajusta el tamaño del texto */
+    display: block; /* Muestra el texto como un bloque */
+    margin-top: 4px; /* Espaciado superior para el texto */
+    text-align: center; /* Centra el texto dentro del cuadro */
+}
+
+/* Centrar el contenido dentro del cuadro */
+.section-box {
+    text-align: center; /* Centra el contenido del cuadro */
+}
+
+/* Estilos para las imágenes dentro de las secciones */
+.section-box img {
+    background-color: white; /* Establece el fondo blanco para la imagen */
+    padding: 8px; /* Aplica espaciado interno alrededor de la imagen */
+    border-radius: 50%; /* Hace que las imágenes tengan forma circular */
+}
+
+/* Estilos para la superposición de fondo del modal */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente para la superposición */
+}
+
+/* Estilos para el contenido del modal */
+.modal-content {
+    max-width: 90%; /* Establece un ancho máximo para el modal */
+    margin: auto; /* Centra el modal en la pantalla */
+    border-radius: 8px; /* Redondea los bordes del modal */
+    padding: 20px; /* Aplica espaciado interno dentro del modal */
+}
+
+/* Estilo para el modal oculto */
+.modal.hidden {
+    display: none; /* Esconde el modal por defecto */
+}
+
+/* Estilos para el contenido del modal */
+.modal-content {
+    max-width: 90%; /* Ancho máximo del contenido del modal */
+    margin: auto; /* Centra el contenido */
+    border-radius: 8px; /* Bordes redondeados para el contenido */
+    padding: 20px; /* Espaciado interno dentro del modal */
+    background-color: white; /* Establece el fondo blanco para el contenido del modal */
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+}
+
+/* Estilos para la lista de productos */
+.product-list {
+    list-style: none; /* Elimina los puntos de la lista */
+    padding-left: 0; /* Elimina el padding a la izquierda */
+}
+
+/* Estilos para los párrafos dentro de la información del producto */
+.product-info p {
+    margin: 0.5rem 0; /* Aplica margen superior e inferior a los párrafos */
+}
+
+/* Estilo para la línea divisoria en la información del producto */
+.product-info hr {
+    border: none; /* Elimina el borde predeterminado */
+    border-top: 1px solid #ddd; /* Agrega una línea superior para separación */
+    margin: 0.5rem 0; /* Espacio arriba y abajo de la línea */
+}
+
+/* Clases utilitarias */
+.hidden {
+    display: none; /* Oculta el elemento */
+}
+
+/* Color verde para el texto */
+.text-green-600 {
+    color: #16a34a; /* Establece un color verde para el texto */
+}
+
+/* Estilo para la superposición de fondo del modal */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+    max-width: 500px; /* Ancho máximo del contenido del modal */
+    padding: 20px; /* Espaciado interno dentro del modal */
+}
+
+/* Estilos para el modal que es fijo */
+.modal {
+    display: none; /* Esconde el modal por defecto */
+}
+
+.modal.hidden {
+    display: none; /* Mantiene el modal oculto */
+}
+
+/* Estilos para las imágenes circulares */
+.rounded-full {
+    border-radius: 50%; /* Aplica bordes redondeados completos a las imágenes */
+}
+
+/* Estilo para el modal que es fijo */
+.modal {
+    display: flex; /* Usa flexbox para centrar el contenido */
+    position: fixed; /* Fija el modal en la pantalla */
+    z-index: 1; /* Asegura que el modal esté sobre otros elementos */
+    left: 0; /* Posición izquierda */
+    top: 0; /* Posición superior */
+    width: 100%; /* Ancho completo de la pantalla */
+    height: 100%; /* Altura completa de la pantalla */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+}
+
+/* Estilos del contenido del modal */
+.modal-content {
+    background-color: white; /* Establece el fondo blanco para el contenido del modal */
+    padding: 20px; /* Aplica espaciado interno dentro del modal */
+    border-radius: 10px; /* Bordes redondeados para el contenido del modal */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Agrega sombra para profundidad */
+}
+
+/* Estilos de los botones */
+button {
+    background-color: #4CAF50; /* Color de fondo verde para botones */
+    color: white; /* Color del texto blanco para botones */
+    border: none; /* Sin borde en los botones */
+    padding: 10px 20px; /* Espaciado interno en los botones */
+    text-align: center; /* Centra el texto en los botones */
+    text-decoration: none; /* Elimina el subrayado del texto en los botones */
+    display: inline-block; /* Permite el uso de padding en los botones */
+    font-size: 16px; /* Tamaño de fuente en los botones */
+    margin: 4px 2px; /* Margen en los botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Bordes redondeados para los botones */
+}
+
+/* Estilos para el botón de cerrar */
+.close-button {
+    background-color: red; /* Color de fondo rojo para el botón de cerrar */
+    border: none; /* Sin borde en el botón de cerrar */
+    padding: 10px; /* Espaciado interno en el botón de cerrar */
+    color: white; /* Color del texto blanco en el botón de cerrar */
+    font-size: 16px; /* Tamaño de fuente en el botón de cerrar */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón de cerrar */
+    border-radius: 5px; /* Bordes redondeados para el botón de cerrar */
+}
+/* Estilos para el botón de guardar */
+.save-button {
+    display: inline-block; /* Muestra el botón como un elemento en línea con bloque, permitiendo aplicar margen */
+    margin-top: 15px; /* Espaciado superior de 15px para separar el botón de otros elementos */
+    background-color: #008CBA; /* Establece un color de fondo azul para el botón de guardar */
+    color: white; /* Color del texto en el botón, en este caso blanco */
+    padding: 8px 12px; /* Aplica relleno interno de 8px arriba y abajo, y 12px a los lados */
+    border-radius: 5px; /* Redondea los bordes del botón con un radio de 5px */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón, indicando que es clickeable */
+    border: none; /* Elimina el borde predeterminado del botón */
+}
+
+/* Estilos para el botón de subir */
+.upload-button {
+    display: inline-block; /* Muestra el botón como un elemento en línea con bloque, permitiendo aplicar margen */
+    margin-top: 15px; /* Espaciado superior de 15px para separar el botón de otros elementos */
+    background-color: #4CAF50; /* Establece un color de fondo verde para el botón de subir */
+    color: white; /* Color del texto en el botón, en este caso blanco */
+    padding: 8px 12px; /* Aplica relleno interno de 8px arriba y abajo, y 12px a los lados */
+    border-radius: 5px; /* Redondea los bordes del botón con un radio de 5px */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón, indicando que es clickeable */
+}
